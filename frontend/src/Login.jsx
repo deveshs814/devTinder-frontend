@@ -1,9 +1,12 @@
 import  { useState } from "react";
 import axios from 'axios';
+import { useDispatch } from "react-redux";
+import { addUser } from "./utils/userSlice";
 
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
 const handleLogin = async () => {
   try {
@@ -12,12 +15,12 @@ const handleLogin = async () => {
       { emailId, password },
       { withCredentials: true }
     );
+    dispatch(addUser(res.data));
     console.log("Login Success", res.data);
   } catch (error) {
     console.error("Login Error", error);
   }
 };
-
 
   return (
     <div className="flex justify-center my-10">
