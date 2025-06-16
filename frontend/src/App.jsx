@@ -1,9 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Body from "./Body";
-import Login from "./Login";
-import Profile from "./Profile";
+import Body from "./components/Body.jsx";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
 import appStore from "./utils/appStore";
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import Feed from './components/feed.jsx'
+
 function App() {
   return (
     <>
@@ -11,6 +13,7 @@ function App() {
       <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<Body />} >
+          <Route path="/feed" element={<Feed/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           </Route>
