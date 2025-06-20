@@ -8,6 +8,7 @@ import {BASE_URL} from "../utils/constants.js";
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,10 +20,9 @@ const handleLogin = async () => {
       { withCredentials: true }
     );
     dispatch(addUser(res.data));
-    return navigate("/feed");
-    console.log("Login Success", res.data);
+    return navigate("/");
   } catch (error) {
-    console.error("Login Error", error);
+    setError(error?.response?.data || "Something went wrong!!");
   }
 };
 
@@ -70,6 +70,7 @@ const handleLogin = async () => {
               placeholder="Password" />
             </label>
           </div>
+          <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={handleLogin}>Submit</button>
           </div>
