@@ -29,18 +29,33 @@ const Connections = () => {
   if (connections.length === 0) return <h1>No Connections Found</h1>;
 
   return (
-    <div className="flex flex-col items-center my-10">
-      <h1 className="font-bold text-2xl mb-4">Connections</h1>
-      {connections.map((connection, index) => (
+  <div className="flex flex-col items-center my-10">
+    <h1 className="font-bold text-2xl mb-4">Connections</h1>
+    {connections.map((connection, index) => {
+      const { firstName, lastName, photoUrl, age, gender, about } = connection;
+
+      return (
         <div
-          key={connection._id || connection.email || index}
-          className="border p-2 m-1 rounded"
+          key={connection._id || connection.emailId || index}
+          className="border p-4 m-2 rounded w-80 shadow-md bg-blue-400"
         >
-          {connection.firstName}
+          <img
+            src={photoUrl}
+            alt={`${firstName} ${lastName}`}
+            className="w-20 h-20 rounded-full mx-auto mb-2 object-cover"
+          />
+          <h2 className="text-lg font-semibold text-center">
+            {firstName} {lastName}
+          </h2>
+          <p className="text-sm text-center text-gray-600">Age: {age}</p>
+          <p className="text-sm text-center text-gray-600">Gender: {gender}</p>
+          <p className="text-sm text-center mt-2 italic">"{about}</p>
         </div>
-      ))}
-    </div>
-  );
+      );
+    })}
+  </div>
+);
+
 };
 
 export default Connections;
