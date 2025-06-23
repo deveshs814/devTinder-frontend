@@ -1,12 +1,26 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
-import { addRequests } from "../utils/requestSlice";
+import { addRequests, removeRequest } from "../utils/requestSlice";
 import { useEffect } from "react";
 
 const Requests = () => {
   const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
+
+  const reviewRequests = async (status, _id) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/review" + "/"+ status + "/" + _id,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeRequest(_id));
+    } catch (error) {}
+  };
+
   const fetchRequests = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", {
@@ -22,7 +36,7 @@ const Requests = () => {
     fetchRequests();
   }, []);
   if (!requests) return <h1>Loading...</h1>;
-  if (requests.length === 0) return <h1>No Request Found</h1>;
+  if (requests.length === 0) return <h1 className="flex justify-center my-10">No Request Found</h1>;
 
   return (
     <div className="flex flex-col items-center my-10">
@@ -56,10 +70,16 @@ const Requests = () => {
               <p className="text-sm text-center mt-2 italic">"{about}"</p>
             )}
             <div className="flex justify-center items-center gap-4 my-6">
-              <button className="btn bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition duration-300">
+              <button
+                className="btn bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition duration-300"
+                onClick={() => reviewRequests("rejected", request._id)}
+              >
                 Reject
               </button>
-              <button className="btn bg-pink-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition duration-300">
+              <button
+                className="btn bg-pink-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition duration-300"
+                onClick={() => reviewRequests("accepted", request._id)}
+              >
                 Accept
               </button>
             </div>
