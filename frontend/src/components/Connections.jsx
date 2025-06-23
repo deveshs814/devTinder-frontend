@@ -47,9 +47,9 @@ const Connections = () => {
           <h2 className="text-lg font-semibold text-center">
             {firstName} {lastName}
           </h2>
-          <p className="text-sm text-center text-gray-600">Age: {age}</p>
-          <p className="text-sm text-center text-gray-600">Gender: {gender}</p>
-          <p className="text-sm text-center mt-2 italic">"{about}</p>
+          {age && <p className="text-sm text-center text-gray-600">Age: {age}</p>}
+          {gender && <p className="text-sm text-center text-gray-600">Gender: {gender}</p>}
+          {about && <p className="text-sm text-center mt-2 italic">"{about}"</p>}
         </div>
       );
     })}
