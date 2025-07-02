@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import { API_BASE_URL  } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import { useEffect } from "react";
@@ -14,7 +14,7 @@ const Feed = () => {
     if (feed && feed.length > 0) return; // If feed exists and has users, do nothing
     
     try {
-      const res = await axios.get(BASE_URL + "/feed", {
+      const res = await axios.get(API_BASE_URL  + "/feed", {
         withCredentials: true,
       });
       // Assuming res.data is an array of users
